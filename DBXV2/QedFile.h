@@ -209,6 +209,8 @@ enum QedConditions
     QED_COND_UNK_68 = 68, // Added in 1.25.1 Param 1: integer Param 2: integer
     QED_COND_UNK_69 = 69, // Added in 1.25.1 No params
     QED_COND_UNK_70 = 70, // Added in 1.25.1 Param 1: integer
+    QED_COND_UNK_71 = 71, // Added in 1.26. Param 1: integer
+    QED_COND_UNK_72 = 72, // Added in 1.26. Params: ? They seem a list of 8 bit integers that are usually in crescent order
 };
 
 // There are 120 actions according to the exe (function 0x6AC380 in 1.09.01)
@@ -236,7 +238,7 @@ enum QedActions
     QED_ACT_LOAD_DEMO = 6, // Param 1: filename, Param 2: fade_mode  (see fade mode)
     QED_ACT_REGISTER_ACTOR_FOR_DEMO = 7, // (official name is ActorRegist, but this is demo related only) Param 1: qml_id. Note: you can only register up to 7 actors, game holds a count and checks for this!
     QED_ACT_PLAY_DEMO = 8, // Plays loaded demo. Params: none
-    QED_ACT_UNK_9 = 9, // Related with demo. Param 1: i1 (unused by game), Param 2: i2, Param 3: b3
+    QED_ACT_UNK_9 = 9, // Related with demo. Param 1: i1 (unused by game), Param 2: i2, Param 3: i3 (was believed to be a boolean for long time)
     QED_ACT_UNK_10 = 10, // (Used only in few legend patrol quests) Param 1: qml_char, Param 2: i2 (param is logged, but not used otherwise)
     QED_ACT_QUICK_POWERUP = 11, // (Used in some story quests of OSQ and CTP) Param 1: qml_char, Param 2: transformation
     QED_ACT_REMOVE_CHARA_ = 12, // (Alias for REMOVE_CHARA opcode 16, identical function called) Param 1: qml_char, Param 2: boolean (if true, applies a vanish fade)
@@ -358,12 +360,27 @@ enum QedActions
     QED_ACT_UNK_134 = 134, // (Added in 1.25.1) Param 1: i1
     QED_ACT_PLAY_SHENRON_EVENT = 135, // (Added in 1.25.1). Param 1: integer Param 2: integer or boolean -> this param is not being used by the exe, let's default to integer
     QED_ACT_UNK_136 = 136, // (Added in 1.25.1) Params are complex. There is uses of 16bits qml_char that currently the quest compiler doesn't support and some other shit. Atm, we'll treat it as 7 integer params.
+    QED_ACT_UNK_137 = 137, // (Added in 1.25.1, not used until 1.26)  Param 1: string
     QED_ACT_UNK_138 = 138, // (Added in 1.25.1) Param 1: integer (range 0-3) Param 2, 3, 4: integer
     QED_ACT_UNK_139 = 139, // (Added in 1.25.1) Param 1: integer (index to an internal integer array of 4 elements, but boundaries are not even checked). Param 2: integer
     QED_ACT_UNK_140 = 140, // (Added in 1.25.1) Param 1,2,3: integer
     QED_ACT_UNK_141 = 141, // (Added in 1.25.1) This function has a lot of ressemblance to the previous one in the exe. Param 1,2,3: integer
     QED_ACT_UNK_142 = 142, // (Added in 1.25.1) No params.
     QED_ACT_UNK_143 = 143, // (Added in 1.25.1) Param 1: integer (range 0-2) Param 2: boolean
+    QED_ACT_UNK_144 = 144, // (Added in 1.26) Param 1: string
+    QED_ACT_UNK_145 = 145, // (Added in 1.26) No params.
+    QED_ACT_UNK_146 = 146, // (Added in 1.26). Param 1: integer. Params 2-5: 16 bit integer Param 3: integer. Params 4-7: 16 bit integer
+    QED_ACT_UNK_147 = 147, // (Added in 1.26) Param 1: qml char Param 2: boolean
+    QED_ACT_UNK_148 = 148, // (Addrd in 1.26) Param 1: qml char Param 2: integer. Mob_Untransform is called in this condition
+    QED_ACT_UNK_149 = 149, // (Added in 1.26) Param 1: integer (range 0-2)
+    QED_ACT_UNK_150 = 150, // (Added in 1.26) Param 1: qml char, Params 2-3: 16 bit integer; Params 4-9: float
+    QED_ACT_UNK_151 = 151, // (Added in 1.26) Param 1: integer Param 2: integer
+    QED_ACT_UNK_152 = 152, // (Added in 1.26) Param 1: qml char Param 2: integer
+    QED_ACT_UNK_153 = 153, // (Added in 1.26) No params. Debug string "CustomBgm Enable. EventCancel!" is seen in the function. Also specific reference to "CTP_27_08", the quest where this act is used.
+    QED_ACT_UNK_154 = 154, // (Added in 1.26) No params.
+    QED_ACT_UNK_155 = 155, // (Added in 1.26) Param 1: integer
+    QED_ACT_UNK_156 = 156, // (Added in 1.26) Param 1: qml char Param 2: float
+    QED_ACT_UNK_157 = 157, // (Added in 1.26) Param 1: qml char
 };
 
 // Condition extensions of xv2 patcher

@@ -116,6 +116,7 @@ struct X2mSlotEntry
     int32_t model_preset;
     bool flag_gk2;
     bool flag_cgk;
+    bool flag_kfk;
     int32_t voices_id_list[2];
     //
     std::vector<std::string> costume_name;
@@ -131,6 +132,7 @@ struct X2mSlotEntry
         model_preset = 0;
         flag_gk2 = false;
         flag_cgk = false;
+        flag_kfk = false;
         voices_id_list[0] = voices_id_list[1] = -1;
 
         costume_name.resize(XV2_LANG_NUM);
@@ -667,7 +669,7 @@ protected:
 
 public:
 
-    const float X2M_CURRENT_VERSION = 25.0f;
+    const float X2M_CURRENT_VERSION = 26.0f;
 
     const float X2M_MIN_VERSION_CSO = 2.0f;
     const float X2M_MIN_VERSION_PSC = 3.0f;
@@ -719,6 +721,9 @@ public:
     const float X2M_MIN_VERSION_SKILL_CHARA_DEPEND = 23.0f;
     const float X2M_MIN_VERSION_SKILL_KI_REQUIREMENT = 24.0f;
     const float X2M_MIN_VERSION_CUS125_FORMAT = 25.0f;
+    const float X2M_MIN_VERSION_IDB126_FORMAT = 26.0f;
+    const float X2M_MIN_VERSION_QXD126_FORMAT = 26.0f;
+    const float X2M_MIN_VERSION_KFK_FLAG = 26.0f;
 
     X2mFile();
     virtual ~X2mFile() override;

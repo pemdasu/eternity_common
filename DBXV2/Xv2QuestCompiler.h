@@ -345,6 +345,7 @@ enum InstructionParamsTypes
     PARAM_INTEGER_HEX, // For the compiler, there is no difference with above, but for decompiler it makes it to write it in hex
     PARAM_FLOAT,
     PARAM_BOOLEAN,
+    PARAM_INTEGER_OR_BOOLEAN, // This was added for backwards compatibility of boolean values that were discovered later that they were actually integers
     PARAM_REVERSE_BOOLEAN,
     PARAM_STRING20,
     PARAM_STRING24,

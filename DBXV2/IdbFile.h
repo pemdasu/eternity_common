@@ -415,11 +415,10 @@ public:
     virtual bool Compile(TiXmlDocument *doc, bool big_endian=false) override;
 
     inline size_t GetNumEntries() const { return entries.size(); }
+    int GetVersion() const { return version; }
 
     IdbEntry *FindEntryByID(uint32_t id);
-    IdbEntry *FindEntryByIdAndType(uint16_t id, uint16_t type);
-
-    int GetVersion() const { return version; }
+    IdbEntry *FindEntryByIdAndType(uint16_t id, uint16_t type);    
 
     bool AddEntry(const IdbEntry &entry, bool overwrite_existing);
     bool AddEntryAuto(IdbEntry &entry, uint16_t id_start);

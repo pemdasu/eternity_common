@@ -79,6 +79,7 @@ enum QxdUpdate
     QXD_UPDATE_DLC18 = 0x400000,
     QXD_UPDATE_DLC19 = 0x800000,
     QXD_UPDATE_DLC20 = 0x1000000,
+    QXD_UPDATE_DLC21 = 0x2000000,
     QXD_UPDATE_DEVELOPER = 0x10000000,
 };
 
@@ -105,6 +106,7 @@ enum QxdDlc
     QXD_DLC_DLC18 = 0x40000,
     QXD_DLC_DLC19 = 0x80000,
     QXD_DLC_DLC20 = 0x100000,
+    QXD_DLC_DLC21 = 0x200000,
 };
 
 // Matches order used by game exe

@@ -35,6 +35,7 @@ void X2mSlotEntry::CopyFrom(const CharaListSlotEntry &entry, bool name)
     model_preset = entry.model_preset;
     flag_gk2 = entry.flag_gk2;
     flag_cgk = entry.flag_cgk;
+    flag_kfk = entry.flag_kfk;
     voices_id_list[0] = entry.voices_id_list[0];
     voices_id_list[1] = entry.voices_id_list[1];
     audio_files[0].clear();
@@ -75,6 +76,7 @@ void X2mSlotEntry::CopyTo(CharaListSlotEntry &entry, const std::string &code) co
     entry.unlock_index = 0;
     entry.flag_gk2 = flag_gk2;
     entry.flag_cgk = flag_cgk;
+    entry.flag_kfk = flag_kfk;
     entry.voices_id_list[0] = voices_id_list[0];
     entry.voices_id_list[1] = voices_id_list[1];
     entry.dlc = "Dlc_Def";
@@ -90,8 +92,9 @@ TiXmlElement *X2mSlotEntry::Decompile(TiXmlNode *root, bool new_format) const
         entry_root->SetAttribute("hidden", "true");
 
     Utils::WriteParamUnsigned(entry_root, "MODEL_PRESET", (int64_t)model_preset, true);
-    Utils::WriteParamString(entry_root, "FLAG_GK2", (flag_gk2) ? "true" : "false");
-    Utils::WriteParamString(entry_root, "FLAG_CGK", (flag_cgk) ? "true" : "false");
+    Utils::WriteParamBoolean(entry_root, "FLAG_GK2", flag_gk2);
+    Utils::WriteParamBoolean(entry_root, "FLAG_CGK", flag_cgk);
+    Utils::WriteParamBoolean(entry_root, "FLAG_KFK", flag_kfk);
 
     std::vector<uint32_t> voices = { (uint32_t)voices_id_list[0], (uint32_t)voices_id_list[1] };
     Utils::WriteParamMultipleUnsigned(entry_root, "VOICES_ID_LIST", voices, true);
@@ -137,47 +140,17 @@ bool X2mSlotEntry::Compile(const TiXmlElement *root, bool new_format)
     if (!Utils::GetParamUnsigned(root, "MODEL_PRESET", (uint32_t *)&model_preset))
         return false;
 
-    std::string flag;
-
-    if (!Utils::GetParamString(root, "FLAG_GK2", flag))
-        return false;
-
-    flag = Utils::ToLowerCase(flag);
-    if (flag == "true" || flag == "1")
+    if (!Utils::ReadParamBoolean(root, "FLAG_GK2", &flag_gk2))
     {
-        flag_gk2 = true;
-    }
-    else if (flag == "false" || flag == "0")
-    {
-        flag_gk2 = false;
-    }
-    else
-    {
-        DPRINTF("%s: Cannot parse FLAG_GK2 param (%s).\n", FUNCNAME, flag.c_str());
+        DPRINTF("%s: parameter FLAG_GK2 is mandatory.\n", FUNCNAME);
         return false;
     }
 
-    if (Utils::ReadParamString(root, "FLAG_CGK", flag))
-    {
-        flag = Utils::ToLowerCase(flag);
-        if (flag == "true" || flag == "1")
-        {
-            flag_cgk = true;
-        }
-        else if (flag == "false" || flag == "0")
-        {
-            flag_cgk = false;
-        }
-        else
-        {
-            DPRINTF("%s: Cannot parse FLAG_CGK param (%s).\n", FUNCNAME, flag.c_str());
-            return false;
-        }
-    }
-    else
-    {
+    if (!Utils::ReadParamBoolean(root, "FLAG_CGK", &flag_cgk))
         flag_cgk = false;
-    }
+
+    if (!Utils::ReadParamBoolean(root, "FLAG_KFK", &flag_kfk))
+        flag_kfk = false;
 
     if (!Utils::GetParamMultipleUnsigned(root, "VOICES_ID_LIST", (uint32_t *)voices_id_list, 2))
         return false;

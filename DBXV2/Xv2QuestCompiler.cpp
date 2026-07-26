@@ -413,6 +413,7 @@ static const std::vector<ci_string> qxd_char_params =
     "guard_damage",
     "move_speed",
     "boost_speed",
+    "f84", // 1.26
     "ait_table_entry",
 
     "super1",
@@ -459,6 +460,7 @@ static const std::vector<int> qxd_char_types =
     TOKEN_FLOAT,
     TOKEN_FLOAT,
     TOKEN_FLOAT,
+    TOKEN_FLOAT, // 1.26
     TOKEN_INTEGER,
 
     TOKEN_POLI_INTEGER_IDENTIFIER,
@@ -802,6 +804,7 @@ static const std::unordered_map<int, std::string> update_to_constant =
     { QXD_UPDATE_DLC18, "DLC18" },
     { QXD_UPDATE_DLC19, "DLC19" },
     { QXD_UPDATE_DLC20, "DLC20" },
+    { QXD_UPDATE_DLC21, "DLC21" },
     { QXD_UPDATE_DEVELOPER, "DEVELOPER" }
 };
 
@@ -834,6 +837,7 @@ static const std::unordered_map<ci_string, int, CIStrHash> constant_to_update =
     { "DLC18", QXD_UPDATE_DLC18 },
     { "DLC19", QXD_UPDATE_DLC19 },
     { "DLC20", QXD_UPDATE_DLC20 },
+    { "DLC21", QXD_UPDATE_DLC21 },
     { "DEVELOPER", QXD_UPDATE_DEVELOPER }
 };
 
@@ -860,6 +864,7 @@ static const std::unordered_map<int, std::string> dlc_to_constant =
     { QXD_DLC_DLC18, "DLC18" },
     { QXD_DLC_DLC19, "DLC19" },
     { QXD_DLC_DLC20, "DLC20" },
+    { QXD_DLC_DLC21, "DLC21" },
 };
 
 static const std::unordered_map<ci_string, int, CIStrHash> constant_to_dlc =
@@ -885,6 +890,7 @@ static const std::unordered_map<ci_string, int, CIStrHash> constant_to_dlc =
     { "DLC18", QXD_DLC_DLC18 },
     { "DLC19", QXD_DLC_DLC19 },
     { "DLC20", QXD_DLC_DLC20 },
+    { "DLC21", QXD_DLC_DLC21 },
 };
 
 static const std::unordered_map<int, std::string> ai_to_constant =
@@ -1216,14 +1222,16 @@ static const std::unordered_map<int, std::string> quest_fs_to_constant =
 {
     { 0, "COMPLETE" },
     { 1, "ULTIMATE_FINISH" },
-    { 2, "FAIL" }
+    { 2, "FAIL" },
+    { 3, "SUPER_FAIL" },
 };
 
 static const std::unordered_map<ci_string, int, CIStrHash> constant_to_quest_fs =
 {
     { "COMPLETE", 0 },
     { "ULTIMATE_FINISH", 1 },
-    { "FAIL", 2 }
+    { "FAIL", 2 },
+    { "SUPER_FAIL", 3 },
 };
 
 static const std::unordered_map<int, std::string> stats_to_constant2 =
@@ -1276,6 +1284,9 @@ static const std::vector<InstructionDef> instructions_defs =
     { QED_ACT_UNK_117, "Unk117", true, { } },
     { QED_ACT_UNK_130, "Unk130", true, { } },
     { QED_ACT_UNK_142, "Unk142", true, { } },
+    { QED_ACT_UNK_145, "Unk145", true, { } },
+    { QED_ACT_UNK_153, "Unk153", true, { } },
+    { QED_ACT_UNK_154, "Unk154", true, { } },
 
     // 1 param
     { QED_COND_UNK_2, "Unk2", false, { PARAM_STAGE } },
@@ -1302,6 +1313,7 @@ static const std::vector<InstructionDef> instructions_defs =
     { QED_COND_UNK_66, "Unk66", false, { PARAM_INTEGER } },
     { QED_COND_UNK_67, "Unk67", false, { PARAM_INTEGER } },
     { QED_COND_UNK_70, "Unk70", false, { PARAM_INTEGER } },
+    { QED_COND_UNK_71, "Unk71", false, { PARAM_INTEGER } },
     { QED_ACT_REGISTER_ACTOR_FOR_DEMO, "RegisterActorForDemo", true, { PARAM_QCHAR} },
     { QED_ACT_UNK_22, "Unk22", true, { PARAM_BOOLEAN } },
     { QED_ACT_GOTO_STATE, "GotoState", true, { PARAM_INTEGER } },
@@ -1331,6 +1343,11 @@ static const std::vector<InstructionDef> instructions_defs =
     { QED_ACT_UNK_129, "Unk129", true, { PARAM_INTEGER } },
     { QED_ACT_UNK_132, "Unk132", true, { PARAM_BOOLEAN } },
     { QED_ACT_UNK_134, "Unk134", true, { PARAM_INTEGER } },
+    { QED_ACT_UNK_137, "Unk137", true, { PARAM_STRING24 } },
+    { QED_ACT_UNK_144, "Unk144", true, { PARAM_STRING24 } },
+    { QED_ACT_UNK_149, "Unk149", true, { PARAM_INTEGER } },
+    { QED_ACT_UNK_155, "Unk155", true, { PARAM_INTEGER } },
+    { QED_ACT_UNK_157, "Unk157", true, { PARAM_QCHAR } },
 
     // 2 params
     { QED_COND_TIME_PASSED, "TimePassed", false, { PARAM_OPERATOR, PARAM_FLOAT } },
@@ -1390,6 +1407,11 @@ static const std::vector<InstructionDef> instructions_defs =
     { QED_ACT_PLAY_SHENRON_EVENT, "PlayShenronEvent", true, { PARAM_INTEGER, PARAM_INTEGER } },
     { QED_ACT_UNK_139, "Unk139", true, { PARAM_INTEGER, PARAM_INTEGER } },
     { QED_ACT_UNK_143, "Unk143", true, { PARAM_INTEGER, PARAM_BOOLEAN } },
+    { QED_ACT_UNK_147, "Unk147", true, { PARAM_QCHAR, PARAM_BOOLEAN } },
+    { QED_ACT_UNK_148, "Unk148", true, { PARAM_QCHAR, PARAM_INTEGER } },
+    { QED_ACT_UNK_151, "Unk151", true, { PARAM_INTEGER, PARAM_INTEGER } },
+    { QED_ACT_UNK_152, "Unk152", true, { PARAM_QCHAR, PARAM_INTEGER } },
+    { QED_ACT_UNK_156, "Unk156", true, { PARAM_QCHAR, PARAM_FLOAT } },
 
     // 3 params
     { QED_COND_KO, "Ko", false, { PARAM_QCHAR, PARAM_BOOLEAN, PARAM_INTEGER } },
@@ -1405,7 +1427,7 @@ static const std::vector<InstructionDef> instructions_defs =
     { QED_ACT_PLAY_BGM, "PlayBgm", true, { PARAM_INTEGER, PARAM_INTEGER, PARAM_INTEGER } },
     { QED_ACT_PLAY_BGM2, "PlayBgm2", true, { PARAM_INTEGER, PARAM_INTEGER, PARAM_INTEGER } },
     { QED_ACT_STOP_BGM, "StopBgm", true, { PARAM_BOOLEAN, PARAM_INTEGER, PARAM_INTEGER } }, // Set boolean to false
-    { QED_ACT_UNK_9, "Unk9", true, { PARAM_INTEGER, PARAM_INTEGER, PARAM_BOOLEAN } },
+    { QED_ACT_UNK_9, "Unk9", true, { PARAM_INTEGER, PARAM_INTEGER, PARAM_INTEGER_OR_BOOLEAN } },
     { QED_ACT_HEALTH_CAP, "HealthCap", true, { PARAM_BOOLEAN, PARAM_QCHAR, PARAM_FLOAT } },
     { QED_ACT_STATS, "SetStat", true, { PARAM_QCHAR, PARAM_STATS, PARAM_INTEGER } },
     { QED_ACT_USE_SKILL, "UseSkill", true, { PARAM_QCHAR, PARAM_SKILL_SLOT, PARAM_BOOLEAN } },
@@ -1422,13 +1444,14 @@ static const std::vector<InstructionDef> instructions_defs =
     { QED_ACT_UNK_125, "Unk125", true, { PARAM_INTEGER, PARAM_BOOLEAN, PARAM_FLOAT } },
     { QED_ACT_UNK_133, "Unk133", true, { PARAM_STRING20, PARAM_STRING7, PARAM_BOOLEAN } },
     { QED_ACT_UNK_140, "Unk140", true, { PARAM_INTEGER, PARAM_INTEGER, PARAM_INTEGER } },
-    { QED_ACT_UNK_141, "Unk141", true, { PARAM_INTEGER, PARAM_INTEGER, PARAM_INTEGER } },
+    { QED_ACT_UNK_141, "Unk141", true, { PARAM_INTEGER, PARAM_INTEGER, PARAM_INTEGER } },    
 
     // 4 params
     { QED_COND_UNK_10, "Unk10", false, { PARAM_SCMS, PARAM_INTEGER, PARAM_INTEGER, PARAM_INTEGER } },
     { QED_COND_UNK_13, "Unk13", false, { PARAM_SCMS, PARAM_INTEGER, PARAM_INTEGER, PARAM_INTEGER } },
     { QED_COND_ACTION_DONE, "ActionDone", false, { PARAM_INTEGER, PARAM_INTEGER, PARAM_INTEGER, PARAM_INTEGER } },
     { QED_COND_UNK_62, "Unk62", false, { PARAM_QCHAR, PARAM_INTEGER, PARAM_INTEGER, PARAM_INTEGER } },
+    { QED_COND_UNK_72, "Unk72", false, { PARAM_INTEGER_HEX, PARAM_INTEGER_HEX, PARAM_INTEGER_HEX, PARAM_INTEGER_HEX } }, // TODO
     { QED_ACT_FADE_IN, "FadeIn", true, { PARAM_FLOAT, PARAM_FADE, PARAM_REVERSE_BOOLEAN, PARAM_INTEGER } }, // NOTICE: reverse boolean (if true, ui is hidden, that should be description of param, same for FADE_IN)
     { QED_ACT_FADE_OUT, "FadeOut", true, { PARAM_FLOAT, PARAM_FADE, PARAM_REVERSE_BOOLEAN, PARAM_INTEGER } },
     { QED_ACT_SET_REPLACE_CHARA_LOAD, "SetReplaceCharaLoad", true, { PARAM_STRING20, PARAM_QCHAR, PARAM_BOOLEAN, PARAM_FADE } },
@@ -1461,12 +1484,22 @@ static const std::vector<InstructionDef> instructions_defs =
     // 5 params
     { QED_ACT_UNK_131, "Unk131", true, { PARAM_INTEGER, PARAM_INTEGER, PARAM_INTEGER, PARAM_FLOAT, PARAM_STRING12 } },
 
+    // 6 params
+    { QED_ACT_UNK_146, "Unk146", true, { PARAM_INTEGER, PARAM_INTEGER_HEX, PARAM_INTEGER_HEX, PARAM_INTEGER, PARAM_INTEGER_HEX, PARAM_INTEGER_HEX } }, // The hex ones are really two int16 (e.g. really 8 params), but not supported yet
+
     // 7 params
     { QED_ACT_UNK_136, "Unk136", true, { PARAM_INTEGER_HEX, PARAM_INTEGER_HEX, PARAM_INTEGER_HEX, PARAM_INTEGER_HEX, PARAM_INTEGER_HEX, PARAM_INTEGER_HEX, PARAM_INTEGER_HEX } },
 
+    // 8 params
+    { QED_ACT_UNK_150, "Unk150", true, { PARAM_QCHAR, PARAM_INTEGER_HEX, PARAM_FLOAT, PARAM_FLOAT, PARAM_FLOAT, PARAM_FLOAT, PARAM_FLOAT, PARAM_FLOAT } },
+
     // XV2Patcher extensions
     { QED_COND_EXT_IS_AVATAR, "XV2P_IsAvatar", false, { PARAM_QCHAR } },
- };
+};
+
+static std::unordered_set<std::string> noaudio_exceptions = { "CBF_SUB_04", "CBF_SUB_05", "CBF_SUB_06", "CBF_SUB_07", "CBF_SUB_08", "CBF_SUB_09", "CBF_SUB_10", "CBF_SUB_11",
+                                                              "CBF_DELI_00", "CBF_DELI_01", "CBF_DELI_02", "CBF_DELI_03", "CBF_DELI_04", "CBF_DELI_05", "CBF_DELI_06", "CBF_DELI_07",
+                                                              "CBF_DELI_08", "CBF_DELI_09", "CBF_DELI_10", "CBF_DELI_11" };
 
 Xv2QuestCompiler::Xv2QuestCompiler()
 {
@@ -1843,6 +1876,11 @@ std::string Xv2QuestCompiler::GetAudioFile(const std::string &name, uint32_t epi
     {
        prefix = "EVT";
        file = "CAP_UD" + Utils::ToStringAndPad(active_qxd.GetQuestIndex(name), 3);
+    }
+    else if (quest_type == QUEST_TYPE_CBF)
+    {
+        prefix = "CBF";
+        file = "CAR_CBF" + Utils::ToStringAndPad(active_qxd.GetQuestIndex(name), 3);
     }
 
     if (english)
@@ -2873,6 +2911,9 @@ bool Xv2QuestCompiler::LoadDialogueAudio(const std::string &quest_name, uint32_t
 
         if (!xv2fs->LoadFile(dynamic_cast<CriwareAudioContainer *>(&dialogue_acb[i]), acb))
         {
+            if (i == 0 && noaudio_exceptions.find(quest_name) != noaudio_exceptions.end())
+                return true;
+
             DPRINTF("Failed to load acb: %s\n", acb.c_str());
             return false;
         }
@@ -2928,6 +2969,12 @@ bool Xv2QuestCompiler::CommitDialogueAudio()
         file = Utils::MakePathString("data/sound/VOX/Quest", file);
         const std::string acb = file + ".acb";
         const std::string awb = file + ".awb";
+
+        if (i == 0 && noaudio_exceptions.find(compiled_quest.name) == noaudio_exceptions.end())
+        {
+            if (!xv2fs->FileExists(file, true, false))
+                return true;
+        }
 
         if (use_internal_awb[i])
         {
@@ -7122,6 +7169,7 @@ bool Xv2QuestCompiler::DecompileQxdChar(const QxdCharacter &chara, bool special,
     WriteFloatParam(oss, "guard_damage", chara.unk_48);
     WriteFloatParam(oss, "move_speed", chara.air_speed);
     WriteFloatParam(oss, "boost_speed", chara.boost_speed);
+    WriteFloatParam(oss, "f84", chara.unk_54); // 1.26
     WriteIntegerParam(oss, "ait_table_entry", chara.ait_table_entry);
 
     oss << '\n';
@@ -7772,7 +7820,7 @@ bool Xv2QuestCompiler::DecompileInstruction(const InstructionDef &def, const Qed
             param_float = &params.group2.param4.num.f;
         }
 
-        if (def.param_types[p] == PARAM_INTEGER)
+        if (def.param_types[p] == PARAM_INTEGER || def.param_types[p] == PARAM_INTEGER_OR_BOOLEAN)
         {
             oss << *param_int;
         }
@@ -9604,6 +9652,10 @@ bool Xv2QuestCompiler::CompileQxdChar(bool special)
             {
                 chara.boost_speed = value_float;
             }
+            else if (token.str == "f84")
+            {
+                chara.unk_54 = value_float; // 1.26
+            }
             else if (token.str == "ait_table_entry")
             {
                 chara.ait_table_entry = value_int;
@@ -10943,6 +10995,20 @@ bool Xv2QuestCompiler::CompileInstruction(const InstructionDef &def, QedInstruct
                 return false;
 
             *out_param_int = (param.b != false);
+        }
+        else if (def.param_types[p] == PARAM_INTEGER_OR_BOOLEAN)
+        {
+            if (!ExpectTokenType(param, { TOKEN_INTEGER, TOKEN_BOOLEAN }))
+                return false;
+
+            if (param.type == TOKEN_INTEGER)
+            {
+                *out_param_int = param.num;
+            }
+            else
+            {
+                *out_param_int = (param.b != false);
+            }
         }
         else if (def.param_types[p] == PARAM_REVERSE_BOOLEAN)
         {
